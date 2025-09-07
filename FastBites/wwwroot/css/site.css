@@ -1,0 +1,11 @@
+body {
+    padding-bottom: 60px;
+}
+
+.jumbotron {
+    color: #222;
+}
+
+.card {
+    border-radius: 12px;
+}

@@ -1,0 +1,45 @@
+﻿@model IEnumerable<FastBites.Models.Product>
+@{
+    ViewData["Title"] = "Menu";
+    var categories = (IEnumerable<FastBites.Models.Category>)ViewBag.Categories;
+}
+
+<div class="d-flex mb-3">
+    <div class="me-3">
+        <h5>Categories</h5>
+        <ul class="list-group">
+            <li class="list-group-item"><a href="/Menu">All</a></li>
+            @foreach (var c in categories)
+            {
+                <li class="list-group-item"><a href="/Menu?categoryId=@c.Id">@c.Name</a></li>
+            }
+        </ul>
+    </div>
+
+    <div class="flex-fill">
+        <div class="row">
+            @foreach (var p in Model)
+            {
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100">
+                        <img src="@p.ImageUrl" class="card-img-top" alt="@p.Name" style="height:160px; object-fit:cover;">
+                        <div class="card-body d-flex flex-column">
+                            <h5 class="card-title">@p.Name</h5>
+                            <p class="card-text">@p.Description</p>
+                            <div class="mt-auto">
+                                <p class="fw-bold">@p.Price.ToString("C")</p>
+                                <form method="post" action="/Cart/Add">
+                                    <input type="hidden" name="productId" value="@p.Id" />
+                                    <input type="hidden" name="name" value="@p.Name" />
+                                    <input type="hidden" name="price" value="@p.Price" />
+                                    <button class="btn btn-primary btn-sm">Add to cart</button>
+                                    <a class="btn btn-link btn-sm" href="/Menu/Details/@p.Id">Details</a>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
